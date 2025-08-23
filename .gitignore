@@ -8,7 +8,9 @@
 /.bundle
 
 # Ignore all environment files.
+# Ignore all environment files except example templates.
 /.env*
+!/.env*.example
 
 # Ignore all logfiles and tempfiles.
 /log/*

@@ -42,6 +42,11 @@ gem "thruster", require: false
 
 gem "tailwindcss-rails", "~> 4.0"
 
+# Redis for cache, queue, and Action Cable
+gem "redis", "~> 5.0"
+# Sidekiq for background jobs (optional, but recommended)
+gem "sidekiq", "~> 7.0"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

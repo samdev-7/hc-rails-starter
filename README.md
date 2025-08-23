@@ -1,24 +1,55 @@
-# README
+# Hack Club Rails Starter Templplate (WIP)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Local Development Setup
 
-Things you may want to cover:
+### 1. Prerequisites
 
-* Ruby version
+- Ruby (see `.ruby-version` or Gemfile)
+- Bundler (`gem install bundler`)
+- Docker (for running Postgres)
 
-* System dependencies
+### 2. Start Postgres with Docker
 
-* Configuration
+You can spin up a local Postgres instance using Docker:
 
-* Database creation
+```sh
+docker run --rm -d \
+  --name hc-rails-starter-postgres \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=hc_rails_starter_development \
+  -p 5432:5432 \
+  postgres:15
+```
 
-* Database initialization
+Update your `.env` file with these credentials:
 
-* How to run the test suite
+```
+PGHOST=localhost
+PGPORT=5432
+PGUSER=your_db_user
+PGPASSWORD=your_db_password
+PGDATABASE=hc_rails_starter_development
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+### 3. Install dependencies
 
-* Deployment instructions
+```sh
+bundle install
+```
 
-* ...
+### 4. Setup the database
+
+```sh
+bin/rails db:setup
+```
+
+### 5. Start the Rails server
+
+```sh
+bin/dev
+```
+
+---
+
+See `.env.development.example` for required environment variables.
