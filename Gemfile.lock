@@ -114,6 +114,12 @@ GEM
     erubi (1.13.1)
     et-orbi (1.3.0)
       tzinfo
+    faraday (2.13.4)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-net_http (3.4.1)
+      net-http (>= 0.5.0)
     ffi (1.17.2-aarch64-linux-gnu)
     ffi (1.17.2-aarch64-linux-musl)
     ffi (1.17.2-arm-linux-gnu)
@@ -175,6 +181,8 @@ GEM
     mini_mime (1.1.5)
     minitest (5.25.5)
     msgpack (1.8.0)
+    net-http (0.6.0)
+      uri
     net-imap (0.5.9)
       date
       net-protocol
@@ -417,6 +425,7 @@ DEPENDENCIES
   capybara
   debug
   dotenv-rails
+  faraday (~> 2.13)
   hotwire-livereload (~> 2.0)
   importmap-rails
   jbuilder
