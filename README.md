@@ -1,5 +1,10 @@
 # Hack Club Rails Starter Templplate (WIP)
 
+This template aims to be a starting point for Hack Club programs written in rails. It is heavily inspired by, with code used from, previous Hack Club programs such as the Summer of Making, HCB, or Submit. This template contains:
+
+- User authentication via Slack OAuth
+- WIP
+
 ## Local Development Setup
 
 ### 1. Prerequisites
@@ -13,7 +18,7 @@
 You can spin up a local Postgres instance using Docker:
 
 ```sh
-docker run --rm -d \
+docker run -d \
   --name hc-rails-starter-postgres \
   -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=postgres \
