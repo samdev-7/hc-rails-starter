@@ -42,6 +42,11 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Defines the root path route ("/")
+  # Defines the root path route for unauthenticated users
   root "landing#index"
+
+  # Slack authentication
+  get "auth/slack" => "sessions#new", as: :signin
+  get "auth/slack/callback" => "sessions#create", as: :slack_callback
+  delete "auth/signout" => "sessions#destroy", as: :signout
 end

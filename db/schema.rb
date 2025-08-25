@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_23_173305) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_25_011828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,11 +19,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_23_173305) do
     t.string "slack_id", null: false
     t.string "display_name", null: false
     t.string "timezone", null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
     t.integer "role", default: 0, null: false
     t.boolean "is_banned", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email", null: false
   end
 end

@@ -4,8 +4,9 @@ module Authentication
   extend ActiveSupport::Concern
 
   included do
-    before_action :authenticate_user!
-    helper_method :authenticated?
+      before_action :set_current_user
+      before_action :authenticate_user!
+      helper_method :authenticated?, :current_user
   end
 
   class_methods do
@@ -17,18 +18,21 @@ module Authentication
   private
 
   def authenticate_user!
-    set_current_user
-    unless Current.user
-      redirect_to new_session_path, alert: "You need to be logged in to see this!"
+    unless current_user
+      redirect_to root_path, alert: "You need to be logged in to see this!"
     end
   end
 
-  def authenticated?
-    Current.user.present?
+  def user_authenticated?
+    current_user.present?
   end
 
   def set_current_user
-    Current.user = User.find_by(id: session[:user_id]) if session[:user_id]
+    @current_user = User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+
+  def current_user
+    @current_user
   end
 
   def terminate_session
