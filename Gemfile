@@ -48,7 +48,7 @@ gem "redis", "~> 5.0"
 gem "sidekiq", "~> 7.0"
 
 # PostgreSQL adapter for ActiveRecord
-gem "pg", "~> 1.5"
+gem "pg", "~> 1.6"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
