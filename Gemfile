@@ -80,4 +80,4 @@ gem "hotwire-livereload", "~> 2.0", group: :development
 
 gem "faraday", "~> 2.13"
 
-gem "slack-ruby-client", "~> 2.7"
+gem "slack-ruby-client", "~> 3.0"
