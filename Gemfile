@@ -85,3 +85,5 @@ gem "slack-ruby-client", "~> 3.0"
 
 gem "ahoy_matey"
 gem "geocoder"
+
+gem "pundit", "~> 2.4"

@@ -9,16 +9,15 @@
 #  hca_token           :text
 #  is_adult            :boolean          default(FALSE), not null
 #  is_banned           :boolean          default(FALSE), not null
-#  role                :integer          default("user"), not null
+#  roles               :string           default([]), not null, is an Array
 #  timezone            :string           not null
 #  verification_status :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  hca_id              :string           not null
 #  slack_id            :string           not null
 #
 class User < ApplicationRecord
-  enum :role, { user: 0, admin: 1 }
-
   has_many :ahoy_visits, class_name: "Ahoy::Visit", dependent: :nullify
   has_many :ahoy_events, class_name: "Ahoy::Event", dependent: :nullify
 
@@ -26,8 +25,31 @@ class User < ApplicationRecord
 
   validates :avatar, :display_name, :email, :timezone, presence: true
   validates :slack_id, presence: true
-  validates :role, presence: true
+  validates :hca_id, presence: true
+  validates :roles, presence: true
   validates :is_banned, inclusion: { in: [ true, false ] }
+
+  def has_role?(role)
+    roles.include?(role.to_s)
+  end
+
+  def add_role(role)
+    roles << role.to_s unless has_role?(role)
+    save
+  end
+
+  def remove_role(role)
+    roles.delete(role.to_s)
+    save
+  end
+
+  def admin?
+    has_role?(:admin)
+  end
+
+  def user?
+    has_role?(:user)
+  end
 
   def self.exchange_hca_token(code, redirect_uri)
     token_data = HcaService.exchange_code_for_token(code, redirect_uri)
@@ -63,7 +85,7 @@ class User < ApplicationRecord
         }.to_json)
       end
 
-      user.update(hca_token: access_token)
+      user.update(hca_token: access_token, hca_id: identity["id"])
       user.refresh_profile_from_slack
       return user
     end
@@ -110,8 +132,10 @@ class User < ApplicationRecord
       slack_id: slack_id,
       verification_status: verification_status,
       hca_token: access_token,
+      hca_id: identity["id"],
       is_adult: is_adult,
-      is_banned: false
+      is_banned: false,
+      roles: [ "user" ]
     )
   end
 
