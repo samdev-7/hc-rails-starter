@@ -87,3 +87,4 @@ gem "ahoy_matey"
 gem "geocoder"
 
 gem "pundit", "~> 2.4"
+gem "paper_trail", "~> 17.0"
