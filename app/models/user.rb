@@ -9,7 +9,6 @@
 #  hca_token           :text
 #  is_adult            :boolean          default(FALSE), not null
 #  is_banned           :boolean          default(FALSE), not null
-#  phone               :string
 #  role                :integer          default("user"), not null
 #  timezone            :string           not null
 #  verification_status :string
@@ -19,6 +18,9 @@
 #
 class User < ApplicationRecord
   enum :role, { user: 0, admin: 1 }
+
+  has_many :ahoy_visits, class_name: "Ahoy::Visit", dependent: :nullify
+  has_many :ahoy_events, class_name: "Ahoy::Event", dependent: :nullify
 
   encrypts :hca_token
 
@@ -162,6 +164,19 @@ class User < ApplicationRecord
         error: e.message
       }.to_json)
     end
+  end
+
+  def first_ref
+    first_visit = ahoy_visits.order(:started_at).first
+    return nil unless first_visit
+
+    visitor_token = first_visit.visitor_token
+    earliest_visit_with_ref = Ahoy::Visit.where(visitor_token: visitor_token)
+                                          .where.not(utm_source: nil)
+                                          .order(:started_at)
+                                          .first
+
+    earliest_visit_with_ref&.utm_source
   end
 
   private
