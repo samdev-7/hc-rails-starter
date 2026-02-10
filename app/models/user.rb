@@ -18,6 +18,8 @@
 #  slack_id            :string           not null
 #
 class User < ApplicationRecord
+  has_paper_trail
+
   has_many :ahoy_visits, class_name: "Ahoy::Visit", dependent: :nullify
   has_many :ahoy_events, class_name: "Ahoy::Event", dependent: :nullify
 
