@@ -9,11 +9,12 @@
 #  hca_token           :text
 #  is_adult            :boolean          default(FALSE), not null
 #  is_banned           :boolean          default(FALSE), not null
-#  role                :integer          default("user"), not null
+#  roles               :string           default([]), not null, is an Array
 #  timezone            :string           not null
 #  verification_status :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  hca_id              :string           not null
 #  slack_id            :string           not null
 #
 require "test_helper"

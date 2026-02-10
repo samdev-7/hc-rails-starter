@@ -11,29 +11,30 @@
 #  hca_token           :text
 #  is_adult            :boolean          default(FALSE), not null
 #  is_banned           :boolean          default(FALSE), not null
-#  role                :integer          default("user"), not null
+#  roles               :string           default([]), not null, is an Array
 #  timezone            :string           not null
 #  verification_status :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  hca_id              :string           not null
 #  slack_id            :string           not null
 #
 one:
   avatar: MyString
   slack_id: MyString
   display_name: MyString
+  email: user1@example.com
   timezone: MyString
-  first_name: MyString
-  last_name: MyString
-  role: 1
+  hca_id: hca_id_1
+  roles: ["admin"]
   is_banned: false
 
 two:
   avatar: MyString
   slack_id: MyString
   display_name: MyString
+  email: user2@example.com
   timezone: MyString
-  first_name: MyString
-  last_name: MyString
-  role: 1
+  hca_id: hca_id_2
+  roles: ["user"]
   is_banned: false
