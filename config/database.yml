@@ -3,19 +3,15 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: <%= ENV["PGHOST"] || ENV["POSTGRES_HOST"] || ENV["DB_HOST"] || "localhost" %>
-  port: <%= ENV["PGPORT"] || ENV["POSTGRES_PORT"] || ENV["DB_PORT"] || 5432 %>
-  username: <%= ENV["PGUSER"] || ENV["POSTGRES_USER"] || ENV["DB_USERNAME"] %>
-  password: <%= ENV["PGPASSWORD"] || ENV["POSTGRES_PASSWORD"] || ENV["DB_PASSWORD"] %>
 
 development:
   <<: *default
-  database: <%= ENV["PGDATABASE"] || ENV["POSTGRES_DB"] || ENV["DB_NAME"] || "hc_rails_starter_development" %>
+  url: <%= ENV["DATABASE_URL"] || "postgresql://postgres:starter@localhost:5432/hc_rails_starter_development" %>
 
 test:
   <<: *default
-  database: <%= ENV["PGDATABASE_TEST"] || ENV["POSTGRES_DB_TEST"] || ENV["DB_NAME_TEST"] || "hc_rails_starter_test" %>
+  url: <%= ENV["DATABASE_URL"] || "postgresql://postgres:starter@localhost:5432/hc_rails_starter_test" %>
 
 production:
   <<: *default
-  database: <%= ENV["PGDATABASE"] || ENV["POSTGRES_DB"] || ENV["DB_NAME"] || "hc_rails_starter_production" %>
+  url: <%= ENV["DATABASE_URL"] %>
