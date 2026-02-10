@@ -88,3 +88,4 @@ gem "geocoder"
 
 gem "pundit", "~> 2.4"
 gem "paper_trail", "~> 17.0"
+gem "mission_control-jobs", "~> 0.6"

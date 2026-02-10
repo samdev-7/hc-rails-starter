@@ -35,7 +35,21 @@
 #                update_rails_disk_service PUT    /rails/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
 #                     rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
 
+class AdminConstraint
+  def matches?(request)
+    user_id = request.session[:user_id]
+    return false unless user_id
+
+    user = User.find_by(id: user_id)
+    user&.admin?
+  end
+end
+
 Rails.application.routes.draw do
+  constraints AdminConstraint.new do
+    mount MissionControl::Jobs::Engine, at: "/jobs"
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
