@@ -48,6 +48,10 @@ end
 Rails.application.routes.draw do
   constraints AdminConstraint.new do
     mount MissionControl::Jobs::Engine, at: "/jobs"
+
+    namespace :admin do
+      get "/" => "static_pages#index", as: :root
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -69,8 +73,4 @@ Rails.application.routes.draw do
   delete "auth/signout" => "auth#destroy", as: :signout
 
   get "home" => "home#index", as: :home
-
-  namespace :admin do
-    get "/" => "static_pages#index", as: :root
-  end
 end
