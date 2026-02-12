@@ -73,4 +73,7 @@ Rails.application.routes.draw do
   delete "auth/signout" => "auth#destroy", as: :signout
 
   get "home" => "home#index", as: :home
+
+  get "docs" => "markdown#show", as: :docs
+  get "docs/*slug" => "markdown#show", as: :doc
 end
