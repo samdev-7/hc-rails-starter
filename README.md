@@ -16,6 +16,7 @@ This template aims to be a starting point for Hack Club programs written in Rail
 - Solid Queue, Solid Cache, and Solid Cable for jobs, caching, and WebSockets
 - Hotwire (Turbo + Stimulus) with Tailwind CSS 4
 - Sentry error tracking, Skylight performance monitoring
+- Active Storage with Cloudflare R2 and image variant processing
 - Kamal deployment with Thruster for HTTP caching/compression
 
 ## Local Development Setup
@@ -62,6 +63,17 @@ bin/rails db:setup
 
 ```sh
 bin/dev
+```
+
+### Cloudflare R2 (Production)
+
+Active Storage is configured to use Cloudflare R2 in production. Development uses local disk storage by default. To set up R2 for production, create an R2 bucket and API token in the Cloudflare dashboard, then set these environment variables:
+
+```
+R2_ACCESS_KEY_ID=your_access_key_id
+R2_SECRET_ACCESS_KEY=your_secret_access_key
+R2_BUCKET=your_bucket_name
+R2_ENDPOINT=https://<account_id>.r2.cloudflarestorage.com
 ```
 
 ---
