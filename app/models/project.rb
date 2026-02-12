@@ -27,8 +27,11 @@
 #
 class Project < ApplicationRecord
   include Discardable
+  include PgSearch::Model
 
   has_paper_trail
+
+  pg_search_scope :search, against: [ :name, :description ], using: { tsearch: { prefix: true } }
 
   belongs_to :user
   has_many :ships, dependent: :destroy

@@ -2,7 +2,7 @@ class Admin::ShipsController < Admin::ApplicationController
   before_action :set_ship, only: %i[show edit update]
 
   def index
-    @ships = Ship.includes(:project, :reviewer, project: :user).order(created_at: :desc)
+    @pagy, @ships = pagy(Ship.includes(:project, :reviewer, project: :user).order(created_at: :desc))
   end
 
   def show
