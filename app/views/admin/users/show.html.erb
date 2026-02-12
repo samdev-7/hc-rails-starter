@@ -2,7 +2,12 @@
   <div class="flex items-center gap-4 mb-6">
     <img src="<%= @user.avatar %>" alt="<%= @user.display_name %>" class="w-16 h-16 rounded-full">
     <div>
-      <h1 class="font-bold text-4xl"><%= @user.display_name %></h1>
+      <h1 class="font-bold text-4xl">
+        <%= @user.display_name %>
+        <% if @user.discarded? %>
+          <span class="text-sm text-red-500 font-normal">Deleted on <%= @user.discarded_at.strftime("%b %d, %Y") %></span>
+        <% end %>
+      </h1>
       <p class="text-gray-500"><%= @user.email %></p>
     </div>
   </div>

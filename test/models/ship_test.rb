@@ -10,7 +10,7 @@
 #  frozen_repo_link  :string
 #  frozen_screenshot :string
 #  justification     :string
-#  status            :integer          default(0), not null
+#  status            :integer          default("pending"), not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  project_id        :bigint           not null

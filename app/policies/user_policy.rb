@@ -20,7 +20,7 @@ class UserPolicy < ApplicationPolicy
       if user&.admin?
         scope.all
       else
-        scope.where(id: user&.id)
+        scope.kept.where(id: user&.id)
       end
     end
   end

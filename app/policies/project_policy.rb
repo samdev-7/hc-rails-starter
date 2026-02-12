@@ -6,6 +6,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def show?
+    return false if record.discarded? && !admin?
     admin? || !record.is_unlisted || owner?
   end
 
@@ -14,10 +15,12 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def update?
+    return false if record.discarded? && !admin?
     admin? || owner?
   end
 
   def destroy?
+    return false if record.discarded?
     admin? || owner?
   end
 
@@ -26,7 +29,7 @@ class ProjectPolicy < ApplicationPolicy
       if user&.admin?
         scope.all
       else
-        scope.listed.or(scope.where(user: user))
+        scope.kept.listed.or(scope.kept.where(user: user))
       end
     end
   end

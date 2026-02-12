@@ -13,8 +13,13 @@
     </thead>
     <tbody>
       <% @users.each do |user| %>
-        <tr class="border-b hover:bg-gray-50">
-          <td class="py-2 px-3"><%= link_to user.display_name, admin_user_path(user), class: "text-blue-600 hover:underline" %></td>
+        <tr class="border-b hover:bg-gray-50 <%= 'opacity-50' if user.discarded? %>">
+          <td class="py-2 px-3">
+            <%= link_to user.display_name, admin_user_path(user), class: "text-blue-600 hover:underline" %>
+            <% if user.discarded? %>
+              <span class="text-xs text-red-500 ml-1">Deleted</span>
+            <% end %>
+          </td>
           <td class="py-2 px-3"><%= user.email %></td>
           <td class="py-2 px-3"><%= user.roles.join(", ") %></td>
           <td class="py-2 px-3"><%= user.projects.size %></td>

@@ -1,5 +1,10 @@
 <div class="max-w-4xl mx-auto py-8">
-  <h1 class="font-bold text-4xl mb-2"><%= @project.name %></h1>
+  <h1 class="font-bold text-4xl mb-2">
+    <%= @project.name %>
+    <% if @project.discarded? %>
+      <span class="text-sm text-red-500 font-normal">Deleted on <%= @project.discarded_at.strftime("%b %d, %Y") %></span>
+    <% end %>
+  </h1>
   <p class="text-gray-500 mb-6">Owned by <%= link_to @project.user.display_name, admin_user_path(@project.user), class: "text-blue-600 hover:underline" %></p>
 
   <div class="grid grid-cols-2 gap-4 mb-6">

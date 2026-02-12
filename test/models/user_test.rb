@@ -4,6 +4,7 @@
 #
 #  id                  :bigint           not null, primary key
 #  avatar              :string           not null
+#  discarded_at        :datetime
 #  display_name        :string           not null
 #  email               :string           not null
 #  hca_token           :text
@@ -16,6 +17,10 @@
 #  updated_at          :datetime         not null
 #  hca_id              :string           not null
 #  slack_id            :string           not null
+#
+# Indexes
+#
+#  index_users_on_discarded_at  (discarded_at)
 #
 require "test_helper"
 
