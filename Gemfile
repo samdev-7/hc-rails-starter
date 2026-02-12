@@ -94,3 +94,5 @@ gem "skylight", "~> 7.0"
 
 gem "sentry-ruby", "~> 5.23"
 gem "sentry-rails", "~> 5.23"
+
+gem "redcarpet", "~> 3.6"
