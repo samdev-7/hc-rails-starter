@@ -18,11 +18,11 @@
     </div>
     <div>
       <span class="text-sm text-gray-500">Demo Link</span>
-      <p><%= @project.demo_link.present? ? link_to(@project.demo_link, @project.demo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "None" %></p>
+      <p><%= safe_url(@project.demo_link) ? link_to(@project.demo_link, safe_url(@project.demo_link), target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "None" %></p>
     </div>
     <div>
       <span class="text-sm text-gray-500">Repo Link</span>
-      <p><%= @project.repo_link.present? ? link_to(@project.repo_link, @project.repo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "None" %></p>
+      <p><%= safe_url(@project.repo_link) ? link_to(@project.repo_link, safe_url(@project.repo_link), target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "None" %></p>
     </div>
   </div>
 

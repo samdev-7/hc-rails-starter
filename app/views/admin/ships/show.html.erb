@@ -38,11 +38,11 @@
   <div class="grid grid-cols-2 gap-4 mb-6">
     <div>
       <span class="text-sm text-gray-500">Frozen Demo Link</span>
-      <p><%= @ship.frozen_demo_link.present? ? link_to(@ship.frozen_demo_link, @ship.frozen_demo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "—" %></p>
+      <p><%= safe_url(@ship.frozen_demo_link) ? link_to(@ship.frozen_demo_link, safe_url(@ship.frozen_demo_link), target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "—" %></p>
     </div>
     <div>
       <span class="text-sm text-gray-500">Frozen Repo Link</span>
-      <p><%= @ship.frozen_repo_link.present? ? link_to(@ship.frozen_repo_link, @ship.frozen_repo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "—" %></p>
+      <p><%= safe_url(@ship.frozen_repo_link) ? link_to(@ship.frozen_repo_link, safe_url(@ship.frozen_repo_link), target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "—" %></p>
     </div>
   </div>
 

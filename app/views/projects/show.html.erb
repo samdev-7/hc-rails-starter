@@ -28,11 +28,11 @@
   <% end %>
 
   <div class="flex gap-4 text-sm text-gray-500 mb-6">
-    <% if @project.demo_link.present? %>
-      <%= link_to "Demo", @project.demo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline" %>
+    <% if safe_url(@project.demo_link) %>
+      <%= link_to "Demo", safe_url(@project.demo_link), target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline" %>
     <% end %>
-    <% if @project.repo_link.present? %>
-      <%= link_to "Repository", @project.repo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline" %>
+    <% if safe_url(@project.repo_link) %>
+      <%= link_to "Repository", safe_url(@project.repo_link), target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline" %>
     <% end %>
   </div>
 
