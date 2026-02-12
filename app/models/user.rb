@@ -22,6 +22,9 @@ class User < ApplicationRecord
 
   has_many :ahoy_visits, class_name: "Ahoy::Visit", dependent: :nullify
   has_many :ahoy_events, class_name: "Ahoy::Event", dependent: :nullify
+  has_many :projects, dependent: :destroy
+  has_many :ships, through: :projects
+  has_many :reviewed_ships, class_name: "Ship", foreign_key: :reviewer_id, dependent: :nullify, inverse_of: :reviewer
 
   encrypts :hca_token
 
@@ -51,6 +54,14 @@ class User < ApplicationRecord
 
   def user?
     has_role?(:user)
+  end
+
+  def reviewer?
+    has_role?(:reviewer)
+  end
+
+  def staff?
+    admin? || reviewer?
   end
 
   def self.exchange_hca_token(code, redirect_uri)

@@ -35,44 +35,38 @@
 #                update_rails_disk_service PUT    /rails/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
 #                     rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
 
-class AdminConstraint
-  def matches?(request)
-    user_id = request.session[:user_id]
-    return false unless user_id
-
-    user = User.find_by(id: user_id)
-    user&.admin?
-  end
-end
+require_relative "../lib/constraints/staff_constraint"
+require_relative "../lib/constraints/admin_constraint"
+require_relative "../lib/constraints/reviewer_constraint"
 
 Rails.application.routes.draw do
+  constraints StaffConstraint.new do
+    namespace :admin do
+      get "/" => "static_pages#index", as: :root
+      resources :ships, only: [ :index, :show, :edit, :update ], path: "reviews"
+    end
+  end
+
   constraints AdminConstraint.new do
     mount MissionControl::Jobs::Engine, at: "/jobs"
 
     namespace :admin do
-      get "/" => "static_pages#index", as: :root
+      resources :projects, only: [ :index, :show ]
+      resources :users, only: [ :index, :show ]
     end
   end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route for unauthenticated users
   root "landing#index"
 
-  # HCA OAuth authentication
   get "auth/hca/start" => "auth#new", as: :signin
   get "auth/hca/callback" => "auth#create", as: :hca_callback
   delete "auth/signout" => "auth#destroy", as: :signout
 
   get "home" => "home#index", as: :home
+
+  resources :projects
 
   get "docs" => "markdown#show", as: :docs
   get "docs/*slug" => "markdown#show", as: :doc

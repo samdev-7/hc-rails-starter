@@ -1,0 +1,54 @@
+<div class="max-w-4xl mx-auto py-8">
+  <h1 class="font-bold text-4xl mb-2">Ship #<%= @ship.id %></h1>
+  <p class="text-gray-500 mb-6">for <%= @ship.project.name %> by <%= @ship.project.user.display_name %></p>
+
+  <div class="grid grid-cols-2 gap-4 mb-6">
+    <div>
+      <span class="text-sm text-gray-500">Status</span>
+      <p class="capitalize"><%= @ship.status %></p>
+    </div>
+    <div>
+      <span class="text-sm text-gray-500">Reviewer</span>
+      <p><%= @ship.reviewer&.display_name || "Unassigned" %></p>
+    </div>
+    <div>
+      <span class="text-sm text-gray-500">Approved Seconds</span>
+      <p><%= @ship.approved_seconds || "—" %></p>
+    </div>
+    <div>
+      <span class="text-sm text-gray-500">Created</span>
+      <p><%= @ship.created_at.strftime("%B %d, %Y") %></p>
+    </div>
+  </div>
+
+  <% if @ship.justification.present? %>
+    <div class="mb-4">
+      <span class="text-sm text-gray-500">Justification</span>
+      <p class="mt-1"><%= @ship.justification %></p>
+    </div>
+  <% end %>
+
+  <% if @ship.feedback.present? %>
+    <div class="mb-4">
+      <span class="text-sm text-gray-500">Feedback</span>
+      <p class="mt-1"><%= @ship.feedback %></p>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-2 gap-4 mb-6">
+    <div>
+      <span class="text-sm text-gray-500">Frozen Demo Link</span>
+      <p><%= @ship.frozen_demo_link.present? ? link_to(@ship.frozen_demo_link, @ship.frozen_demo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "—" %></p>
+    </div>
+    <div>
+      <span class="text-sm text-gray-500">Frozen Repo Link</span>
+      <p><%= @ship.frozen_repo_link.present? ? link_to(@ship.frozen_repo_link, @ship.frozen_repo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "—" %></p>
+    </div>
+  </div>
+
+  <% if policy(@ship).update? %>
+    <div class="mt-6">
+      <%= link_to "Edit", edit_admin_ship_path(@ship), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+    </div>
+  <% end %>
+</div>

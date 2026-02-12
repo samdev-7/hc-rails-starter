@@ -6,7 +6,7 @@ Keep your changes as low impact as possible. You do not need to give me a summar
 
 Read all context and instructions carefully before making changes. Code may be manually modified between messages. Do not suggest code that has been deleted or is no longer relevant.
 
-This project uses ruby 3.4.4 and rails 8.1.2. Make sure to only suggest changes that are applicable to those versions. Prefer to use the cli to generate boilerplate rather than generate it manually. You can always modify boilerplate generated from the cli.
+This project uses ruby 3.4.4 and rails 8.1.2. Make sure to only suggest changes that are applicable to those versions. Prefer to use the cli to generate boilerplate rather than generate it manually. You can always modify boilerplate generated from the cli. Pundit policies are also used and should be modified to fit. Please be careful as this pertains to security. If you are not sure about how to modify a policy, ask for clarification. Always ensure that you are following the principle of least privilege when modifying policies. Only give access to what is necessary for the feature to function properly. Do not give access to more than what is needed.
 
 When adding changes, use best rails & hotwire practices and patterns. Use partials and helpers to keep code DRY. Use concerns to share code between models and controllers. Use stimulus over inline javascript. Keep performance in mind and minimize database queries (e.g. use includes, avoid n+1 queries). Use background jobs for long running tasks. Use caching where appropriate. If you add the private keyword, please make sure to check nothing else is affected, as often there will be more existing code after your changes. Private methods should always be at the bottom of the class.
 

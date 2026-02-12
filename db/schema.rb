@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_10_192238) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_12_151447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,39 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_192238) do
     t.index ["visitor_token", "started_at"], name: "index_ahoy_visits_on_visitor_token_and_started_at"
   end
 
+  create_table "projects", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "demo_link"
+    t.text "description"
+    t.boolean "is_unlisted", default: false, null: false
+    t.string "name", null: false
+    t.string "repo_link"
+    t.string "tags", default: [], null: false, array: true
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["is_unlisted"], name: "index_projects_on_is_unlisted"
+    t.index ["tags"], name: "index_projects_on_tags", using: :gin
+    t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "ships", force: :cascade do |t|
+    t.integer "approved_seconds"
+    t.datetime "created_at", null: false
+    t.text "feedback"
+    t.string "frozen_demo_link"
+    t.text "frozen_hca_data"
+    t.string "frozen_repo_link"
+    t.string "frozen_screenshot"
+    t.string "justification"
+    t.bigint "project_id", null: false
+    t.bigint "reviewer_id"
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_ships_on_project_id"
+    t.index ["reviewer_id"], name: "index_ships_on_reviewer_id"
+    t.index ["status"], name: "index_ships_on_status"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "avatar", null: false
     t.datetime "created_at", null: false
@@ -82,4 +115,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_192238) do
     t.string "whodunnit"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
+
+  add_foreign_key "projects", "users"
+  add_foreign_key "ships", "projects"
+  add_foreign_key "ships", "users", column: "reviewer_id"
 end

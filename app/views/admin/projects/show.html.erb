@@ -1,0 +1,59 @@
+<div class="max-w-4xl mx-auto py-8">
+  <h1 class="font-bold text-4xl mb-2"><%= @project.name %></h1>
+  <p class="text-gray-500 mb-6">Owned by <%= link_to @project.user.display_name, admin_user_path(@project.user), class: "text-blue-600 hover:underline" %></p>
+
+  <div class="grid grid-cols-2 gap-4 mb-6">
+    <div>
+      <span class="text-sm text-gray-500">Unlisted</span>
+      <p><%= @project.is_unlisted ? "Yes" : "No" %></p>
+    </div>
+    <div>
+      <span class="text-sm text-gray-500">Tags</span>
+      <p><%= @project.tags.any? ? @project.tags.join(", ") : "None" %></p>
+    </div>
+    <div>
+      <span class="text-sm text-gray-500">Demo Link</span>
+      <p><%= @project.demo_link.present? ? link_to(@project.demo_link, @project.demo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "None" %></p>
+    </div>
+    <div>
+      <span class="text-sm text-gray-500">Repo Link</span>
+      <p><%= @project.repo_link.present? ? link_to(@project.repo_link, @project.repo_link, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline") : "None" %></p>
+    </div>
+  </div>
+
+  <% if @project.description.present? %>
+    <div class="mb-6">
+      <span class="text-sm text-gray-500">Description</span>
+      <p class="mt-1"><%= @project.description %></p>
+    </div>
+  <% end %>
+
+  <h2 class="font-bold text-2xl mb-4">Ships (<%= @ships.size %>)</h2>
+
+  <% if @ships.any? %>
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="border-b text-left">
+          <th class="py-2 px-3">Status</th>
+          <th class="py-2 px-3">Reviewer</th>
+          <th class="py-2 px-3">Approved Seconds</th>
+          <th class="py-2 px-3">Created</th>
+          <th class="py-2 px-3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @ships.each do |ship| %>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-2 px-3"><span class="capitalize"><%= ship.status %></span></td>
+            <td class="py-2 px-3"><%= ship.reviewer&.display_name || "Unassigned" %></td>
+            <td class="py-2 px-3"><%= ship.approved_seconds || "—" %></td>
+            <td class="py-2 px-3"><%= ship.created_at.strftime("%b %d, %Y") %></td>
+            <td class="py-2 px-3"><%= link_to "View", admin_ship_path(ship), class: "text-blue-600 hover:underline" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-gray-500">No ships yet.</p>
+  <% end %>
+</div>

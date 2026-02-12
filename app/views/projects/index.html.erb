@@ -1,0 +1,12 @@
+<div class="max-w-4xl mx-auto py-8">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="font-bold text-4xl">Projects</h1>
+    <%= link_to "New Project", new_project_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  </div>
+
+  <% if @projects.any? %>
+    <%= render partial: "projects/project", collection: @projects %>
+  <% else %>
+    <p class="text-gray-500">No projects yet.</p>
+  <% end %>
+</div>

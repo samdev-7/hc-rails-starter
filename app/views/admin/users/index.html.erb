@@ -1,0 +1,26 @@
+<div class="max-w-6xl mx-auto py-8">
+  <h1 class="font-bold text-4xl mb-6">Admin: Users</h1>
+
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="border-b text-left">
+        <th class="py-2 px-3">Name</th>
+        <th class="py-2 px-3">Email</th>
+        <th class="py-2 px-3">Roles</th>
+        <th class="py-2 px-3">Projects</th>
+        <th class="py-2 px-3">Joined</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="py-2 px-3"><%= link_to user.display_name, admin_user_path(user), class: "text-blue-600 hover:underline" %></td>
+          <td class="py-2 px-3"><%= user.email %></td>
+          <td class="py-2 px-3"><%= user.roles.join(", ") %></td>
+          <td class="py-2 px-3"><%= user.projects.size %></td>
+          <td class="py-2 px-3"><%= user.created_at.strftime("%b %d, %Y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
