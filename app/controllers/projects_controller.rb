@@ -2,7 +2,9 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: %i[show edit update destroy]
 
   def index
-    @projects = policy_scope(Project).order(created_at: :desc)
+    scope = policy_scope(Project)
+    scope = scope.search(params[:query]) if params[:query].present?
+    @pagy, @projects = pagy(scope.order(created_at: :desc))
   end
 
   def show

@@ -2,7 +2,9 @@ class Admin::ProjectsController < Admin::ApplicationController
   before_action :require_admin!
 
   def index
-    @projects = Project.includes(:user).order(created_at: :desc)
+    scope = Project.includes(:user)
+    scope = scope.search(params[:query]) if params[:query].present?
+    @pagy, @projects = pagy(scope.order(created_at: :desc))
   end
 
   def show

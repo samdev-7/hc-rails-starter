@@ -24,8 +24,11 @@
 #
 class User < ApplicationRecord
   include Discardable
+  include PgSearch::Model
 
   has_paper_trail
+
+  pg_search_scope :search, against: [ :display_name, :email ], using: { tsearch: { prefix: true } }
 
   has_many :ahoy_visits, class_name: "Ahoy::Visit", dependent: :nullify
   has_many :ahoy_events, class_name: "Ahoy::Event", dependent: :nullify

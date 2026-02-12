@@ -2,7 +2,9 @@ class Admin::UsersController < Admin::ApplicationController
   before_action :require_admin!
 
   def index
-    @users = User.order(created_at: :desc)
+    scope = User.all
+    scope = scope.search(params[:query]) if params[:query].present?
+    @pagy, @users = pagy(scope.order(created_at: :desc))
   end
 
   def show

@@ -69,6 +69,7 @@ group :development do
   gem "web-console"
 
   gem "annotaterb"
+  gem "letter_opener"
 end
 
 group :test do
@@ -98,3 +99,6 @@ gem "sentry-rails", "~> 5.23"
 gem "redcarpet", "~> 3.6"
 
 gem "aws-sdk-s3", require: false
+
+gem "pagy", "~> 9.0"
+gem "pg_search", "~> 2.3"
