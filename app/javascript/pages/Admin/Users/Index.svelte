@@ -17,7 +17,12 @@
 
   <form onsubmit={search} class="mb-6">
     <div class="flex gap-2">
-      <input type="search" bind:value={searchQuery} placeholder="Search users..." class="border rounded px-3 py-2 flex-1" />
+      <input
+        type="search"
+        bind:value={searchQuery}
+        placeholder="Search users..."
+        class="border rounded px-3 py-2 flex-1"
+      />
       <button type="submit" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 cursor-pointer">Search</button>
     </div>
   </form>

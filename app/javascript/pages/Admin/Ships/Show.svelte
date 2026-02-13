@@ -57,7 +57,9 @@
       <span class="text-sm text-gray-500">Frozen Demo Link</span>
       <p>
         {#if isSafeUrl(ship.frozen_demo_link)}
-          <a href={ship.frozen_demo_link} target="_blank" rel="noopener" class="text-blue-600 hover:underline">{ship.frozen_demo_link}</a>
+          <a href={ship.frozen_demo_link} target="_blank" rel="noopener" class="text-blue-600 hover:underline"
+            >{ship.frozen_demo_link}</a
+          >
         {:else}
           —
         {/if}
@@ -67,7 +69,9 @@
       <span class="text-sm text-gray-500">Frozen Repo Link</span>
       <p>
         {#if isSafeUrl(ship.frozen_repo_link)}
-          <a href={ship.frozen_repo_link} target="_blank" rel="noopener" class="text-blue-600 hover:underline">{ship.frozen_repo_link}</a>
+          <a href={ship.frozen_repo_link} target="_blank" rel="noopener" class="text-blue-600 hover:underline"
+            >{ship.frozen_repo_link}</a
+          >
         {:else}
           —
         {/if}
@@ -77,7 +81,9 @@
 
   {#if can.update}
     <div class="mt-6">
-      <Link href="/admin/reviews/{ship.id}/edit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Edit</Link>
+      <Link href="/admin/reviews/{ship.id}/edit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >Edit</Link
+      >
     </div>
   {/if}
 </div>

@@ -2,6 +2,7 @@
 #
 # Routes for application:
 #                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
+#                                          GET    /(*path)(.:format)                                                                                redirect(301) {host: "127.0.0.1"}
 #                               admin_root GET    /admin(.:format)                                                                                  admin/static_pages#index
 #                              admin_ships GET    /admin/reviews(.:format)                                                                          admin/ships#index
 #                          edit_admin_ship GET    /admin/reviews/:id/edit(.:format)                                                                 admin/ships#edit
@@ -18,6 +19,7 @@
 #                                   signin GET    /auth/hca/start(.:format)                                                                         auth#new
 #                             hca_callback GET    /auth/hca/callback(.:format)                                                                      auth#create
 #                                  signout DELETE /auth/signout(.:format)                                                                           auth#destroy
+#                                    sorry GET    /sorry(.:format)                                                                                  bans#show
 #                                     home GET    /home(.:format)                                                                                   home#index
 #                                 projects GET    /projects(.:format)                                                                               projects#index
 #                                          POST   /projects(.:format)                                                                               projects#create
@@ -29,6 +31,8 @@
 #                                          DELETE /projects/:id(.:format)                                                                           projects#destroy
 #                                     docs GET    /docs(.:format)                                                                                   markdown#show
 #                                      doc GET    /docs/*slug(.:format)                                                                             markdown#show
+#                          api_v1_projects GET    /api/v1/projects(.:format)                                                                        api/v1/projects#index
+#                           api_v1_project GET    /api/v1/projects/:id(.:format)                                                                    api/v1/projects#show
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
 #        turbo_refresh_historical_location GET    /refresh_historical_location(.:format)                                                            turbo/native/navigation#refresh

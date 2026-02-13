@@ -2,7 +2,12 @@
   import { useForm, page } from '@inertiajs/svelte'
   import type { ProjectForm, SharedProps } from '@/types'
 
-  let { project, title, submit_url, method }: {
+  let {
+    project,
+    title,
+    submit_url,
+    method,
+  }: {
     project: ProjectForm
     title: string
     submit_url: string
@@ -17,7 +22,7 @@
     demo_link: project.demo_link,
     repo_link: project.repo_link,
     is_unlisted: project.is_unlisted,
-    tags: project.tags
+    tags: project.tags,
   })
 
   function submit(e: Event) {
@@ -91,17 +96,17 @@
 
     <div>
       <label class="inline-flex items-center gap-2">
-        <input
-          type="checkbox"
-          bind:checked={$form.is_unlisted}
-          class="rounded border-gray-300"
-        />
+        <input type="checkbox" bind:checked={$form.is_unlisted} class="rounded border-gray-300" />
         <span class="text-sm text-gray-700">Unlisted</span>
       </label>
     </div>
 
     <div>
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer" disabled={$form.processing}>
+      <button
+        type="submit"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+        disabled={$form.processing}
+      >
         {$form.processing ? 'Saving...' : 'Save'}
       </button>
     </div>

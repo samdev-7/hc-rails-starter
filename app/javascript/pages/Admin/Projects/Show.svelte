@@ -2,9 +2,18 @@
   import { Link } from '@inertiajs/svelte'
   import type { AdminProjectDetail } from '@/types'
 
-  let { project, ships }: {
+  let {
+    project,
+    ships,
+  }: {
     project: AdminProjectDetail
-    ships: { id: number; status: string; reviewer_display_name: string | null; approved_seconds: number | null; created_at: string }[]
+    ships: {
+      id: number
+      status: string
+      reviewer_display_name: string | null
+      approved_seconds: number | null
+      created_at: string
+    }[]
   } = $props()
 
   function isSafeUrl(url: string | null): boolean {
@@ -25,7 +34,11 @@
       <span class="text-sm text-red-500 font-normal">Deleted on {project.discarded_at}</span>
     {/if}
   </h1>
-  <p class="text-gray-500 mb-6">Owned by <Link href="/admin/users/{project.user_id}" class="text-blue-600 hover:underline">{project.user_display_name}</Link></p>
+  <p class="text-gray-500 mb-6">
+    Owned by <Link href="/admin/users/{project.user_id}" class="text-blue-600 hover:underline"
+      >{project.user_display_name}</Link
+    >
+  </p>
 
   <div class="grid grid-cols-2 gap-4 mb-6">
     <div>
@@ -40,7 +53,9 @@
       <span class="text-sm text-gray-500">Demo Link</span>
       <p>
         {#if isSafeUrl(project.demo_link)}
-          <a href={project.demo_link} target="_blank" rel="noopener" class="text-blue-600 hover:underline">{project.demo_link}</a>
+          <a href={project.demo_link} target="_blank" rel="noopener" class="text-blue-600 hover:underline"
+            >{project.demo_link}</a
+          >
         {:else}
           None
         {/if}
@@ -50,7 +65,9 @@
       <span class="text-sm text-gray-500">Repo Link</span>
       <p>
         {#if isSafeUrl(project.repo_link)}
-          <a href={project.repo_link} target="_blank" rel="noopener" class="text-blue-600 hover:underline">{project.repo_link}</a>
+          <a href={project.repo_link} target="_blank" rel="noopener" class="text-blue-600 hover:underline"
+            >{project.repo_link}</a
+          >
         {:else}
           None
         {/if}
@@ -85,7 +102,9 @@
             <td class="py-2 px-3">{ship.reviewer_display_name ?? 'Unassigned'}</td>
             <td class="py-2 px-3">{ship.approved_seconds ?? '—'}</td>
             <td class="py-2 px-3">{ship.created_at}</td>
-            <td class="py-2 px-3"><Link href="/admin/reviews/{ship.id}" class="text-blue-600 hover:underline">View</Link></td>
+            <td class="py-2 px-3"
+              ><Link href="/admin/reviews/{ship.id}" class="text-blue-600 hover:underline">View</Link></td
+            >
           </tr>
         {/each}
       </tbody>

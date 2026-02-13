@@ -24,9 +24,7 @@
     </span>
 
     {#if pagy.next}
-      <button onclick={() => goToPage(pagy.next!)} class="px-3 py-1 border rounded hover:bg-gray-100">
-        Next
-      </button>
+      <button onclick={() => goToPage(pagy.next!)} class="px-3 py-1 border rounded hover:bg-gray-100"> Next </button>
     {/if}
   </nav>
 {/if}

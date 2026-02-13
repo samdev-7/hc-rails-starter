@@ -2,7 +2,10 @@
   import { Link } from '@inertiajs/svelte'
   import type { AdminUserDetail } from '@/types'
 
-  let { user, projects }: {
+  let {
+    user,
+    projects,
+  }: {
     user: AdminUserDetail
     projects: { id: number; name: string; ships_count: number; is_unlisted: boolean; created_at: string }[]
   } = $props()
@@ -56,7 +59,9 @@
       <tbody>
         {#each projects as project}
           <tr class="border-b hover:bg-gray-50">
-            <td class="py-2 px-3"><Link href="/admin/projects/{project.id}" class="text-blue-600 hover:underline">{project.name}</Link></td>
+            <td class="py-2 px-3"
+              ><Link href="/admin/projects/{project.id}" class="text-blue-600 hover:underline">{project.name}</Link></td
+            >
             <td class="py-2 px-3">{project.ships_count}</td>
             <td class="py-2 px-3">{project.is_unlisted ? 'Yes' : 'No'}</td>
             <td class="py-2 px-3">{project.created_at}</td>
