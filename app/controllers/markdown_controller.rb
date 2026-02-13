@@ -17,9 +17,14 @@ class MarkdownController < ApplicationController
     not_found unless path
     not_found unless File.expand_path(path).start_with?(File.expand_path(base))
 
-    @content_html = helpers.render_markdown_file(path)
+    content_html = helpers.render_markdown_file(path)
     meta = helpers.docs_meta_for_url("/docs#{slug == 'index' ? '' : "/#{slug}"}")
-    @page_title = meta&.dig(:title).presence || slug.tr("-_/", " ").split.map(&:capitalize).join(" ")
+    page_title = meta&.dig(:title).presence || slug.tr("-_/", " ").split.map(&:capitalize).join(" ")
+
+    render inertia: "Markdown/Show", props: {
+      content_html: content_html,
+      page_title: page_title
+    }
   end
 
   private

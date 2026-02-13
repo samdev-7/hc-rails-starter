@@ -14,7 +14,8 @@ This template aims to be a starting point for Hack Club programs written in Rail
 - Ahoy analytics with visit tracking, geolocation, and UTM attribution
 - Rack::Attack rate limiting and request filtering
 - Solid Queue, Solid Cache, and Solid Cable for jobs, caching, and WebSockets
-- Hotwire (Turbo + Stimulus) with Tailwind CSS 4
+- Inertia.js with Svelte 5, Vite, and TypeScript
+- Tailwind CSS 4
 - Sentry error tracking, Skylight performance monitoring
 - Active Storage with Cloudflare R2 and image variant processing
 - Kamal deployment with Thruster for HTTP caching/compression
@@ -24,6 +25,7 @@ This template aims to be a starting point for Hack Club programs written in Rail
 ### 1. Prerequisites
 
 - Ruby (see `.ruby-version` or Gemfile)
+- Node.js (for Vite and frontend dependencies)
 - Bundler (`gem install bundler`)
 - Docker (for running Postgres)
 
@@ -51,6 +53,7 @@ DATABASE_URL=postgresql://postgres:starter@localhost:5432/hc_rails_starter_devel
 
 ```sh
 bundle install
+npm install
 ```
 
 ### 4. Setup the database

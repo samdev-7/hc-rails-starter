@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
   include SentryContext
   include Pagy::Backend
+  include InertiaPagination
 
   before_action :track_ahoy_visit
 
@@ -10,6 +11,26 @@ class ApplicationController < ActionController::Base
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
+
+  inertia_share auth: -> {
+    {
+      user: current_user&.then { |u|
+        {
+          id: u.id,
+          display_name: u.display_name,
+          email: u.email,
+          avatar: u.avatar,
+          roles: u.roles,
+          is_admin: u.admin?,
+          is_staff: u.staff?,
+          is_banned: u.is_banned
+        }
+      }
+    }
+  }
+  inertia_share flash: -> { flash.to_hash }
+  inertia_share sign_in_path: -> { signin_path }
+  inertia_share sign_out_path: -> { signout_path }
 
   private
 

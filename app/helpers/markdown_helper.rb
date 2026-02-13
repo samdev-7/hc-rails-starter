@@ -20,9 +20,7 @@ module MarkdownHelper
       attrs << %(href="#{ERB::Util.html_escape(href)}")
       attrs << %(title="#{ERB::Util.html_escape(title)}") if title
 
-      if guide_internal_link?(href)
-        attrs << %(data-turbo-action="advance")
-      elsif !same_origin?(href)
+      if !guide_internal_link?(href) && !same_origin?(href)
         attrs << %(target="_blank")
         attrs << %(rel="nofollow noopener")
       end

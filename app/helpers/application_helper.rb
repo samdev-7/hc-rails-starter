@@ -1,6 +1,4 @@
 module ApplicationHelper
-  include Pagy::Frontend
-
   def safe_url(url)
     return nil if url.blank?
 
