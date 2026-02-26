@@ -17,6 +17,7 @@ export interface SharedProps {
   sign_in_path: string
   sign_out_path: string
   errors: Record<string, string[]>
+  [key: string]: unknown
 }
 
 export interface PagyProps {
