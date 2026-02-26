@@ -14,7 +14,7 @@ This template aims to be a starting point for Hack Club programs written in Rail
 - Ahoy analytics with visit tracking, geolocation, and UTM attribution
 - Rack::Attack rate limiting and request filtering
 - Solid Queue, Solid Cache, and Solid Cable for jobs, caching, and WebSockets
-- Inertia.js with Svelte 5, Vite, and TypeScript
+- Inertia.js with React 19, Vite, and TypeScript
 - Tailwind CSS 4
 - Sentry error tracking, Skylight performance monitoring
 - Active Storage with Cloudflare R2 and image variant processing

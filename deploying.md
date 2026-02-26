@@ -1,17 +1,15 @@
 # Deploying on Coolify
 
-This guide covers deploying the app to [Coolify](https://coolify.io).
+This guide covers deploying the app to [Coolify](https://coolify.io) as 4 resources: **main** (web), **worker** (Solid Queue), **PostgreSQL**, and **Redis**.
 
 ## Prerequisites
 
 - A Coolify instance (self-hosted or cloud)
-- A PostgreSQL database
-- A Redis instance (for Action Cable / background jobs)
 - Your repository connected to Coolify via GitHub
 
-## 1. Create Resources in Coolify
+## 1. Create Services
 
-### Database
+### PostgreSQL
 
 1. Go to your Coolify project and click **New Resource** > **Database** > **PostgreSQL**
 2. Note the internal connection URL (e.g. `postgresql://postgres:password@project-db:5432/app`)
@@ -21,16 +19,33 @@ This guide covers deploying the app to [Coolify](https://coolify.io).
 1. Click **New Resource** > **Database** > **Redis**
 2. Note the internal connection URL (e.g. `redis://default:password@project-redis:6379`)
 
-## 2. Create the Application
+## 2. Create the Main (Web) Application
 
 1. Click **New Resource** > **Application**
 2. Select your GitHub repository and branch
-3. Set **Build Pack** to **Dockerfile** (the repo includes a `Dockerfile` at the root)
-4. Set the **Exposed Port** to `80` (Thruster handles HTTP)
+3. Set **Build Pack** to **Dockerfile**
+4. Set **Dockerfile Location** to `Dockerfile`
+5. Set the **Exposed Port** to `80`
+6. Configure the health check to hit `/up` on port `80`
 
-## 3. Configure Environment Variables
+This builds with `Dockerfile` and runs Thruster + Rails server.
 
-Add the following environment variables in **Settings** > **Environment Variables**. Refer to `.env.production.example` for the full list.
+## 3. Create the Worker Application
+
+1. Click **New Resource** > **Application**
+2. Select the **same** GitHub repository and branch
+3. Set **Build Pack** to **Dockerfile**
+4. Set **Dockerfile Location** to `Dockerfile.worker`
+5. **Do not** expose a port — the worker doesn't serve HTTP
+6. **Disable** the health check (the worker is a background process, not a web server)
+
+The worker builds with `Dockerfile.worker` and runs Solid Queue (`bin/jobs`) to process background jobs.
+
+## 4. Configure Environment Variables
+
+Add the following environment variables to **both** the main and worker applications. Refer to `.env.production.example` for the full list.
+
+**Do not** set `SOLID_QUEUE_IN_PUMA` — the worker container handles job processing separately.
 
 ### Required
 
@@ -71,25 +86,25 @@ Add the following environment variables in **Settings** > **Environment Variable
 | `EXTERNAL_API_KEY` | API key for `/api/v1` endpoints |
 | `UPTIME_WORKER_PING_URL` | Uptime monitoring ping URL |
 
-## 4. Network Configuration
+## 5. Network Configuration
 
 If your PostgreSQL and Redis resources are in the same Coolify project, use internal hostnames in `DATABASE_URL` and `REDIS_URL` so traffic stays on the internal Docker network.
 
-## 5. Domain & SSL
+## 6. Domain & SSL
 
-1. In application **Settings**, add your custom domain
+1. In the **main** application's settings, add your custom domain
 2. Coolify handles SSL certificates automatically via Let's Encrypt
+3. The worker does not need a domain
 
-## 6. Deploy
+## 7. Deploy
 
-Push to your configured branch or click **Deploy** in the Coolify dashboard. The Docker entrypoint automatically runs `rails db:prepare` on each deploy, so migrations are applied on startup.
+Deploy the **main** app first (its entrypoint runs `rails db:prepare` to apply migrations), then deploy the **worker**.
 
-## Health Checks
-
-Configure Coolify's health check to hit your app on port `80` at `/up` (the default Rails health check endpoint).
+Push to your configured branch or click **Deploy** in the Coolify dashboard.
 
 ## Troubleshooting
 
 - **Assets not loading**: Ensure `RAILS_MASTER_KEY` is set correctly — asset precompilation happens at build time with a dummy key, but the app needs the real key at runtime for encrypted credentials.
 - **Database connection errors**: Verify `DATABASE_URL` uses the correct internal hostname and that the database resource is running.
 - **WebSocket / Action Cable issues**: Confirm `REDIS_URL` is set and the Redis resource is healthy.
+- **Jobs not processing**: Check the worker container's logs. Ensure it has the same `DATABASE_URL` and `REDIS_URL` as the main app.
