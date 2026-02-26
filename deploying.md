@@ -41,7 +41,33 @@ This builds with `Dockerfile` and runs Thruster + Rails server.
 
 The worker builds with `Dockerfile.worker` and runs Solid Queue (`bin/jobs`) to process background jobs.
 
-## 4. Configure Environment Variables
+## 4. Setup Credentials
+
+If you haven't already, delete the template's placeholder credentials and generate fresh ones:
+
+```sh
+rm config/credentials.yml.enc
+bin/rails credentials:edit
+```
+
+Generate Active Record encryption keys and paste them into the credentials file:
+
+```sh
+bin/rails db:encryption:init
+```
+
+Copy the output into your credentials file so it looks like:
+
+```yaml
+active_record_encryption:
+  primary_key: <generated>
+  deterministic_key: <generated>
+  key_derivation_salt: <generated>
+```
+
+The encrypted credentials file (`config/credentials.yml.enc`) is committed to the repo; the master key (`config/master.key`) is **not** — you'll set it as an environment variable in the next step.
+
+## 5. Configure Environment Variables
 
 Add the following environment variables to **both** the main and worker applications. Refer to `.env.production.example` for the full list.
 
@@ -86,17 +112,17 @@ Add the following environment variables to **both** the main and worker applicat
 | `EXTERNAL_API_KEY` | API key for `/api/v1` endpoints |
 | `UPTIME_WORKER_PING_URL` | Uptime monitoring ping URL |
 
-## 5. Network Configuration
+## 6. Network Configuration
 
 If your PostgreSQL and Redis resources are in the same Coolify project, use internal hostnames in `DATABASE_URL` and `REDIS_URL` so traffic stays on the internal Docker network.
 
-## 6. Domain & SSL
+## 7. Domain & SSL
 
 1. In the **main** application's settings, add your custom domain
 2. Coolify handles SSL certificates automatically via Let's Encrypt
 3. The worker does not need a domain
 
-## 7. Deploy
+## 8. Deploy
 
 Deploy the **main** app first (its entrypoint runs `rails db:prepare` to apply migrations), then deploy the **worker**.
 

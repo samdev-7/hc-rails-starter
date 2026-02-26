@@ -56,13 +56,39 @@ bundle install
 npm install
 ```
 
-### 4. Setup the database
+### 4. Setup credentials
+
+The template ships with a placeholder `config/credentials.yml.enc`. Delete it and generate fresh credentials for your project:
+
+```sh
+rm config/credentials.yml.enc
+bin/rails credentials:edit
+```
+
+Then generate Active Record encryption keys and paste them into the credentials file:
+
+```sh
+bin/rails db:encryption:init
+```
+
+Copy the output into your credentials file so it looks like:
+
+```yaml
+active_record_encryption:
+  primary_key: <generated>
+  deterministic_key: <generated>
+  key_derivation_salt: <generated>
+```
+
+This creates `config/master.key` (keep this secret, never commit it) and a new `config/credentials.yml.enc`.
+
+### 5. Setup the database
 
 ```sh
 bin/rails db:setup
 ```
 
-### 5. Start the Rails server
+### 6. Start the Rails server
 
 ```sh
 bin/dev
