@@ -1,6 +1,8 @@
 # Hack Club Rails Starter Template
 
-This template aims to be a starting point for Hack Club programs written in Rails. It is heavily inspired by, with code used from, previous Hack Club programs such as the Summer of Making, HCB, or Submit.
+This template is a very opinionated starting point for my Hack Club programs written in Rails. It is heavily inspired by, with code used from, previous Hack Club programs and services such as the Summer of Making, HCB, and Submit, as well as [24c02/thirdrail](https://github.com/24c02/thirdrail).
+
+Is it good? I don't know, but it's good enough for me.
 
 ## Features
 
