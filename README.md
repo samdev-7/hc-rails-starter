@@ -4,6 +4,8 @@ This template is a very opinionated starting point for my Hack Club programs wri
 
 Is it good? I don't know, but it's good enough for me.
 
+If you find this useful, I would appreciate a star. Thanks!
+
 ## Features
 
 - HCA OAuth authentication with automatic Slack profile sync
